@@ -138,10 +138,10 @@ namespace API
             );
             services.AddTokenAuthentication(Configuration);
 
-            services.AddCors(option => option.AddPolicy("DefaultPolicy",
+            /*services.AddCors(option => option.AddPolicy("DefaultPolicy",
 
 
-                   ));
+                   ));*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
