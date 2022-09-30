@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace MCC69_App
@@ -28,10 +29,14 @@ namespace MCC69_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSession();
+            services.AddHttpContextAccessor();
+
             services.AddScoped<CountryRepository>();
             services.AddScoped<RegionRepository>();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
-            services.AddSession(options=>options.IdleTimeout = TimeSpan.FromMinutes(5));
+
+            //services.AddSession(options=>options.IdleTimeout = TimeSpan.FromMinutes(5));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +57,16 @@ namespace MCC69_App
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            // Custome Error page
+            app.UseStatusCodePages(async context => {
+                var request = context.HttpContext.Request;
+                var response = context.HttpContext.Response;
+                if (response.StatusCode.Equals((int)HttpStatusCode.NotFound))
+                {
+                    response.Redirect("../home/NotFound404");
+                }
+            });
 
             app.UseAuthorization();
 
