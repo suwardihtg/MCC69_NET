@@ -1,7 +1,5 @@
 ﻿using MCC69_App.Models;
-using MCC69_App.Repositories.Data;
 using MCC69_App.ViewModel;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -12,19 +10,9 @@ using System.Threading.Tasks;
 
 namespace MCC69_App.Controllers
 {
-    public class RegionController : BaseController<Regions,RegionRepository>
+    public class CountryController : Controller
     {
-        public RegionController(RegionRepository regionRepository): base(regionRepository)
-        {
-
-        }
-        
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        /*public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             Json<Regions> RegionList = new Json<Regions>();
 
@@ -38,15 +26,6 @@ namespace MCC69_App.Controllers
             }
             return View(RegionList.data);
 
-        }*/
-        /*  HTTPClientGenerics<Regions> HttpApiRegion = new HTTPClientGenerics<Regions>("Region");
-          public IActionResult Index()
-          {
-              IEnumerable<Regions> regions = null;
-              string token = HttpContext.Session.GetString("token");
-              regions = HttpApiRegion.Get(token);
-              return View(regions);
-          }*/
-
+        }
     }
 }

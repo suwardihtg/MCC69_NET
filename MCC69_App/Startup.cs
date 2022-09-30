@@ -1,5 +1,6 @@
 
 using MCC69_App.Context;
+using MCC69_App.Repositories.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,6 +28,8 @@ namespace MCC69_App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<CountryRepository>();
+            services.AddScoped<RegionRepository>();
             services.AddDbContext<MyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("connection")));
             services.AddSession(options=>options.IdleTimeout = TimeSpan.FromMinutes(5));
         }
